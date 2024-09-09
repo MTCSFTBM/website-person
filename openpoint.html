@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPEN POINT</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('gambar'); /* Ganti dengan URL gambar latar belakang Anda */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Background semi-transparan untuk melihat efek latar belakang */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            position: relative; /* Penting jika Anda ingin menambahkan gambar di dalam form */
+        }
+
+        .form-container::before {
+            content: url('form-background.png'); /* Ganti dengan URL gambar tambahan jika diperlukan */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Pastikan gambar tidak menutupi konten form */
+            opacity: 0.1; /* Sesuaikan opacity jika diperlukan */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+            box-sizing: border-box;
+        }
+
+        .radio label {
+            font-size: 14px;
+            color: #555;
+            margin-right: 10px;
+        }
+
+        .save-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .save-button:hover {
+            background-color: #45a049;
+        }
+
+        .notifier-section,
+        .machine-section,
+        .semi-machine-section,
+        .btu-machine-section,
+        .bias-cutter-machine-section,
+        .bead-apexing-machine-section,
+        .bead-winding-machine-section,
+        .open-point-section,
+        .action-plan-section,
+        .upload-image-section {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Open Point Maintenance Semi Finishing - TBM </h2>
+
+        <!-- Date Picker -->
+        <div class="form-group">
+            <label for="date">Select a date:</label>
+            <input type="date" id="date" name="date">
+        </div>
+
+        <!-- Section Selection -->
+        <div class="form-group">
+            <label>Section</label>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="section" value="TBM" onclick="showNotifier('tbm')" /> TBM
+                </label>
+                <label>
+                    <input type="radio" name="section" value="Semi Finishing" onclick="showNotifier('semi-finishing')" /> SEMI FINISHING
+                </label>
+            </div>
+        </div>
+
+        <!-- Notifier TBM (Dropdown with Rasidi and Dede T) -->
+        <div id="tbm-notifier" class="notifier-section">
+            <label for="tbm-notes">Notifier TBM:</label>
+            <select id="tbm-notes" name="tbm-notes" onchange="showMachineSection('tbm')">
+                <option value="" disabled selected>Select a notifier</option>
+                <option value="Rasidi">Rasidi</option>
+                <option value="Dede T">Dede T</option>
+                <option value="Farhan">Farhan</option>
+                <option value="Ilyas">Ilyas</option>
+                <option value="Anjar">Anjar</option>
+                <option value="Rifki">Rifki</option>
+                <option value="Yusep">Yusep</option>
+            </select>
+        </div>
+
+        <!-- Name Machine TBM -->
+        <div id="machine-section" class="machine-section">
+            <label for="machine-name">Name Machine:</label>
+            <select id="machine-name" name="machine-name" onchange="showBTUMachine()">
+                <option value="" disabled selected>Select a machine</option>
+                <option value="BTU">BTU</option>
+                <option value="STU">STU</option>
+                <option value="MRU">MRU</option>
+                <option value="BANDINA">BANDINA</option>
+            </select>
+        </div>
+
+        <!-- BTU Machine Numbers -->
+        <div id="btu-machine-section" class="btu-machine-section">
+            <label for="btu-machine-number">BTU Machine Number:</label>
+            <select id="btu-machine-number" name="btu-machine-number">
+                <option value="" disabled selected>Select BTU Machine Number</option>
+                <option value="BTU 01">BTU 01</option>
+                <option value="BTU 02">BTU 02</option>
+                <option value="BTU 03">BTU 03</option>
+				<option value="BTU 03">BTU 04</option>
+				<option value="BTU 03">BTU 05</option>
+				<option value="BTU 03">BTU 06</option>
+				<option value="BTU 03">BTU 07</option>
+				<option value="BTU 03">BTU 08</option>
+				<option value="BTU 03">BTU 09</option>
+				<option value="BTU 03">BTU 10</option>
+				<option value="BTU 03">BTU 11</option>
+				<option value="BTU 03">BTU 12</option>
+				<option value="BTU 03">BTU 13</option>
+				<option value="BTU 03">BTU 14</option>
+				<option value="BTU 03">BTU 15</option>
+				<option value="BTU 03">BTU 16</option>
+				<option value="BTU 03">BTU 17</option>
+				<option value="BTU 03">BTU 18</option>
+				<option value="BTU 03">BTU 19</option>
+				<option value="BTU 03">BTU 20</option>
+				<option value="BTU 03">BTU 21</option>
+				<option value="BTU 03">BTU 22</option>
+				<option value="BTU 03">BTU 23</option>
+				<option value="BTU 03">BTU 24</option>
+            </select>
+        </div>
+
+        <!-- STU Machine Numbers -->
+        <div id="stu-machine-section" class="btu-machine-section">
+            <label for="stu-machine-number">STU Machine Number:</label>
+            <select id="stu-machine-number" name="stu-machine-number">
+                <option value="" disabled selected>Select STU Machine Number</option>
+                <option value="STU 01">STU 01</option>
+                <option value="STU 02">STU 02</option>
+                <option value="STU 03">STU 03</option>
+				<option value="STU 03">STU 04</option>
+				<option value="STU 03">STU 05</option>
+				<option value="STU 03">STU 06</option>
+				<option value="STU 03">STU 07</option>
+				<option value="STU 03">STU 08</option>
+				<option value="STU 03">STU 09</option>
+				<option value="STU 03">STU 10</option>
+            </select>
+        </div>
+
+        <!-- MRU Machine Numbers -->
+        <div id="mru-machine-section" class="btu-machine-section">
+            <label for="mru-machine-number">MRU Machine Number:</label>
+            <select id="mru-machine-number" name="mru-machine-number">
+                <option value="" disabled selected>Select MRU Machine Number</option>
+                <option value="MRU 01">MRU 01</option>
+                <option value="MRU 02">MRU 02</option>
+                <option value="MRU 03">MRU 03</option>
+				<option value="MRU 03">MRU 04</option>
+            </select>
+        </div>
+
+        <!-- Notifier Semi Finishing -->
+        <div id="semi-finishing-notifier" class="notifier-section">
+            <label for="semi-finishing-notes">Notifier Semi Finishing:</label>
+            <select id="semi-finishing-notes" name="semi-finishing-notes" onchange="showMachineSection('semi-finishing')">
+                <option value="" disabled selected>Select a notifier</option>
+                <option value="Yogi">Yogi</option>
+                <option value="Egi">Egi</option>
+                <option value="Jejen">Jejen</option>
+                <option value="Indra">Indra</option>
+                <option value="Hasyim">Hasyim</option>
+                <option value="Wahyu">Wahyu</option>
+                <option value="Yusep">Yusep</option>
+            </select>
+        </div>
+
+        <!-- Name Machine Semi Finishing -->
+        <div id="semi-machine-section" class="semi-machine-section">
+            <label for="semi-machine-name">Name Machine:</label>
+            <select id="semi-machine-name" name="semi-machine-name" onchange="showSemiFinishingMachine()">
+                <option value="" disabled selected>Select a machine</option>
+                <option value="Calender">Calender</option>
+                <option value="Inner Liner">Inner Liner</option>
+                <option value="Mini Slitter">Mini Slitter</option>
+                <option value="Single Filler Extruder">Single Filler Extruder</option>
+                <option value="Triplex Extruder">Triplex Extruder</option>
+                <option value="Bias Cutter">Bias Cutter</option>
+                <option value="Bead Apexing">Bead Apexing</option>
+                <option value="Bead Winding Machine">Bead Winding Machine</option>
+            </select>
+        </div>
+
+        <!-- Bias Cutter Machine Numbers -->
+        <div id="bias-cutter-machine-section" class="btu-machine-section">
+            <label for="bias-cutter-machine-number">No Machine Bias Cutter:</label>
+            <select id="bias-cutter-machine-number" name="bias-cutter-machine-number">
+                <option value="" disabled selected>Select Bias Cutter Machine Number</option>
+                <option value="Bias Cutter 01">Bias Cutter 01</option>
+                <option value="Bias Cutter 02">Bias Cutter 02</option>
+            </select>
+        </div>
+
+        <!-- Bead Apexing Machine Numbers -->
+        <div id="bead-apexing-machine-section" class="btu-machine-section">
+            <label for="bead-apexing-machine-number">No Machine Bead Apexing:</label>
+            <select id="bead-apexing-machine-number" name="bead-apexing-machine-number">
+                <option value="" disabled selected>Select Bead Apexing Machine Number</option>
+                <option value="Bead Apexing 01">Bead Apexing 01</option>
+                <option value="Bead Apexing 02">Bead Apexing 02</option>
+                <option value="Bead Apexing 03">Bead Apexing 03</option>
+				<option value="Bead Apexing 03">Bead Apexing 04</option>
+            </select>
+        </div>
+
+        <!-- Bead Winding Machine Numbers -->
+        <div id="bead-winding-machine-section" class="btu-machine-section">
+            <label for="bead-winding-machine-number">No Machine Bead Winding Machine:</label>
+            <select id="bead-winding-machine-number" name="bead-winding-machine-number">
+                <option value="" disabled selected>Select Bead Winding Machine Number</option>
+                <option value="Bead Winding 01">Bead Winding 01</option>
+                <option value="Bead Winding 02">Bead Winding 02</option>
+            </select>
+        </div>
+
+        <!-- Open Point Section -->
+        <div id="open-point-section" class="form-group open-point-section">
+            <label for="open-point">Open Point:</label>
+            <textarea id="open-point" name="open-point" rows="3" cols="30"></textarea>
+        </div>
+
+        <!-- Action Plan Section -->
+        <div id="action-plan-section" class="form-group action-plan-section">
+            <label for="action-plan">Action Plan:</label>
+            <textarea id="action-plan" name="action-plan" rows="3" cols="30"></textarea>
+        </div>
+
+        <!-- Upload Image Section -->
+        <div id="upload-image-section" class="form-group upload-image-section">
+            <label for="upload-image">Upload Gambar:</label>
+            <input type="file" id="upload-image" name="upload-image" accept="image/*">
+        </div>
+
+        <!-- Save Button -->
+        <button type="button" class="save-button">Save</button>
+    </div>
+
+    <script>
+        function showNotifier(section) {
+            document.getElementById('tbm-notifier').style.display = 'none';
+            document.getElementById('semi-finishing-notifier').style.display = 'none';
+
+            if (section === 'tbm') {
+                document.getElementById('tbm-notifier').style.display = 'block';
+            } else if (section === 'semi-finishing') {
+                document.getElementById('semi-finishing-notifier').style.display = 'block';
+            }
+
+            hideAllMachineSections();
+        }
+
+        function showMachineSection(section) {
+            hideAllMachineSections();
+
+            if (section === 'tbm') {
+                document.getElementById('machine-section').style.display = 'block';
+            } else if (section === 'semi-finishing') {
+                document.getElementById('semi-machine-section').style.display = 'block';
+            }
+        }
+
+        function showBTUMachine() {
+            hideAllBTUMachineSections();
+
+            const machine = document.getElementById('machine-name').value;
+            if (machine === 'BTU') {
+                document.getElementById('btu-machine-section').style.display = 'block';
+            } else if (machine === 'STU') {
+                document.getElementById('stu-machine-section').style.display = 'block';
+            } else if (machine === 'MRU') {
+                document.getElementById('mru-machine-section').style.display = 'block';
+            } else {
+                hideAllBTUMachineSections();
+            }
+
+            showAdditionalSections();
+        }
+
+        function showSemiFinishingMachine() {
+            hideAllSemiFinishingMachineSections();
+
+            const machine = document.getElementById('semi-machine-name').value;
+            if (machine === 'Bias Cutter') {
+                document.getElementById('bias-cutter-machine-section').style.display = 'block';
+            } else if (machine === 'Bead Apexing') {
+                document.getElementById('bead-apexing-machine-section').style.display = 'block';
+            } else if (machine === 'Bead Winding Machine') {
+                document.getElementById('bead-winding-machine-section').style.display = 'block';
+            }
+
+            showAdditionalSections();
+        }
+
+        function showAdditionalSections() {
+            document.getElementById('open-point-section').style.display = 'block';
+            document.getElementById('action-plan-section').style.display = 'block';
+            document.getElementById('upload-image-section').style.display = 'block';
+        }
+
+        function hideAllMachineSections() {
+            document.getElementById('machine-section').style.display = 'none';
+            document.getElementById('semi-machine-section').style.display = 'none';
+            hideAllBTUMachineSections();
+            hideAllSemiFinishingMachineSections();
+        }
+
+        function hideAllBTUMachineSections() {
+            document.getElementById('btu-machine-section').style.display = 'none';
+            document.getElementById('stu-machine-section').style.display = 'none';
+            document.getElementById('mru-machine-section').style.display = 'none';
+        }
+
+        function hideAllSemiFinishingMachineSections() {
+            document.getElementById('bias-cutter-machine-section').style.display = 'none';
+            document.getElementById('bead-apexing-machine-section').style.display = 'none';
+            document.getElementById('bead-winding-machine-section').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
